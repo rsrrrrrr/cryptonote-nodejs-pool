@@ -198,6 +198,9 @@ Explanation for each field:
 /* Coin network time to mine one block, see DIFFICULTY_TARGET constant in DAEMON_CODE/src/cryptonote_config.h */
 "coinDifficultyTarget": 120,
 
+"blockchainExplorer": "http://blockexplorer.arqma.com/block/{id}",  //used on blocks page to generate hyperlinks.
+"transactionExplorer": "http://blockexplorer.arqma.com/tx/{id}",    //used on the payments page to generate hyperlinks
+
 /* Set daemon type. Supported values: default, forknote (Fix block height + 1), bytecoin (ByteCoin Wallet RPC API) */
 "daemonType": "default",
 
@@ -244,7 +247,7 @@ Explanation for each field:
                     },
                     "pattern": "^Vdu",  //regex to identify which childcoin the miner specified in password. eg) Vdu is first 3 chars of a MCN wallet address.
                     "blockchainExplorer": "https://explorer.mcn.green/?hash={id}#blockchain_block",
-                    "transactionExporer": "https://explorer.mcn.green/?hash={id}#blockchain_transaction",
+                    "transactionExplorer": "https://explorer.mcn.green/?hash={id}#blockchain_transaction",
                     "api": "https://multi-miner.smartcoinpool.net/apiMerged1",
                     "enabled": true
                     }
@@ -335,6 +338,8 @@ Explanation for each field:
     "paymentId": {
         "addressSeparator": ".", // Character separator between <address> and <paymentID>
         "validation": true // Refuse login if non alphanumeric characters in <paymentID>
+        "validations": ["1,16", "64"], //regex quantity. range 1-16 characters OR exactly 64 character
+        "ban": true  // ban the miner for invalid paymentid
     },
 
     /* Feature to trust share difficulties from miners which can
