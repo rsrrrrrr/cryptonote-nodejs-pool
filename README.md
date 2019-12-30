@@ -215,6 +215,8 @@ Explanation for each field:
 "includeHeight":false, /*true to include block.height in job to miner*/
 "includeAlgo":"cn/wow", /*wownero specific change to include algo in job to miner*/	"includeAlgo":"cn/wow", /*wownero specific change to include algo in job to miner*/
 "isRandomX": true,
+"previousOffset": 7, // bytecoin derived coins try 3
+"offset": 2, // bytecoin derived coins try 3
 /* Logging */
 "logging": {
 
