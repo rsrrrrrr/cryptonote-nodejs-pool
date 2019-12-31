@@ -423,6 +423,14 @@ Explanation for each field:
     "trustProxyIP": false // Proxy X-Forwarded-For support
 },
 
+"rpcMethods": {
+    "getblocktemplate": "get_block_template",
+    "submitblock": {"key": "submit_block",
+                    "value": "{\"blocktemplate_blob\": \"{0}\"}"
+                   }
+},
+
+
 /* Coin daemon connection details (default port is 18981) */
 "daemon": {
     "host": "127.0.0.1",
