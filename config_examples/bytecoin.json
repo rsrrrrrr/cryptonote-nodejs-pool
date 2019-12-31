@@ -1,17 +1,20 @@
 {
-    "poolHost": "your.pool.host",
+    "poolHost": "your.address.com",
 
-    "coin": "bytecoin",
+    "coin": "Bytecoin",
     "symbol": "BCN",
     "coinUnits": 100000000,
     "coinDecimalPlaces": 4,
     "coinDifficultyTarget": 120,
-    "blockchainExplorer": "http://blockexplorer.arqma.com/block/{id}",
-    "transactionExplorer": "http://blockexplorer.arqma.com/tx/{id}",
+    "blockchainExplorer": "https://explorer.bytecoin.org/block?hash={id}",
+    "transactionExplorer": "https://explorer.bytecoin.org/tx?hash={id}",
     "daemonType": "bytecoin",
     "cnAlgorithm": "cryptonight",
+    "isRandomX": false,
     "cnVariant": 0,
     "cnBlobType": 2,
+    "includeHeight": false,
+    "includeAlgo": false,
 
     "logging": {
         "files": {
@@ -24,65 +27,47 @@
             "colors": true
         }
     },
-    "childPools": null,
+
+    "childPools": [],
+
     "poolServer": {
         "enabled": true,
         "mergedMining": false,
-        "clusterForks": "auto",
-        "poolAddress": "** Your pool wallet address **",
-        "intAddressPrefix": 6,
+        "clusterForks": 2,
+        "poolAddress": "your pool wallet",
+        "intAddressPrefix": null,
         "blockRefreshInterval": 1000,
         "minerTimeout": 900,
-        "sslCert": "./cert.pem",
-        "sslKey": "./privkey.pem",
-        "sslCA": "./chain.pem",
+        "sslCert": "/etc/letsencrypt/live/www.smartcoinpool.net/cert.pem",
+        "sslKey": "/etc/letsencrypt/live/www.smartcoinpool.net/privkey.pem",
+        "sslCA": "/etc/letsencrypt/live/www.smartcoinpool.net/chain.pem",
         "ports": [
             {
-                "port": 3333,
-                "difficulty": 5000,
+                "port": 1444,
+                "difficulty": 2000,
                 "desc": "Low end hardware"
             },
             {
-                "port": 4444,
-                "difficulty": 15000,
+                "port": 2444,
+                "difficulty": 20000,
                 "desc": "Mid range hardware"
             },
             {
-                "port": 5555,
-                "difficulty": 25000,
+                "port": 3444,
+                "difficulty": 200000,
                 "desc": "High end hardware"
-            },
-            {
-                "port": 7777,
-                "difficulty": 500000,
-                "desc": "Cloud-mining / NiceHash"
-            },
-            {
-                "port": 8888,
-                "difficulty": 25000,
-                "desc": "Hidden port",
-                "hidden": true
-            },
-            {
-                "port": 9999,
-                "difficulty": 20000,
-                "desc": "SSL connection",
-                "ssl": true
             }
         ],
         "varDiff": {
             "minDiff": 100,
             "maxDiff": 100000000,
-            "targetTime": 60,
+            "targetTime": 30,
             "retargetTime": 30,
             "variancePercent": 30,
-            "maxJump": 100
+            "maxJump": 50
         },
         "paymentId": {
-            "addressSeparator": ".", 
-            "validation": false,
-            "validations": ["1,16", "64"],
-            "ban": true
+            "addressSeparator": "+"
         },
         "fixedDiff": {
             "enabled": true,
@@ -111,60 +96,69 @@
 
     "payments": {
         "enabled": true,
-        "interval": 1800,
-        "maxAddresses": 50,
-        "mixin": 1,
+        "interval": 300,
+        "maxAddresses": 20,
+        "mixin": 6,
         "priority": 0,
-        "transferFee": 50000000,
+        "transferFee": 5000000,
         "dynamicTransferFee": true,
         "minerPayFee" : true,
         "minPayment": 1000000000,
-        "maxTransactionAmount": 50000000000000,
-        "denomination": 1000000000
+        "maxPayment": null,
+        "maxTransactionAmount": 1000000000000,
+        "denomination": 100000000
     },
 
     "blockUnlocker": {
         "enabled": true,
         "interval": 30,
-        "depth": 60,
-        "poolFee": 0.8,
-        "devDonation": 0.2,
+        "depth": 10,
+        "poolFee": 0.0,
+        "devDonation": 0.0,
         "networkFee": 0.0,
-        "fixBlockHeightRPC": false
+        "fixBlockHeightRPC": true,
+        "useFirstVout": false
     },
 
     "api": {
         "enabled": true,
         "hashrateWindow": 600,
-        "updateInterval": 5,
+        "updateInterval": 20,
         "bindIp": "0.0.0.0",
-        "port": 8117,
+        "port": 8217,
         "blocks": 30,
         "payments": 30,
-        "password": "your_password",
-        "ssl": false,
-        "sslPort": 8119,
-        "sslCert": "./cert.pem",
-        "sslKey": "./privkey.pem",
-        "sslCA": "./chain.pem",
+        "password": "password",
+        "ssl": true,
+        "sslPort": 8219,
+        "sslCert": "/etc/letsencrypt/live/www.smartcoinpool.net/cert.pem",
+        "sslKey": "/etc/letsencrypt/live/www.smartcoinpool.net/privkey.pem",
+        "sslCA": "/etc/letsencrypt/live/www.smartcoinpool.net/chain.pem",
         "trustProxyIP": true
+    },
+
+    "rpcMethods": {
+	"getblocktemplate": "get_block_template",
+	"submitblock": {"key": "submit_block",
+			"value": "{\"blocktemplate_blob\": \"{0}\"}"
+		       }
     },
 
     "daemon": {
         "host": "127.0.0.1",
-        "port": 8070
+        "port": 8081
     },
 
     "wallet": {
         "host": "127.0.0.1",
-        "port": 8071
+        "port": 8070
     },
 
     "redis": {
         "host": "127.0.0.1",
         "port": 6379,
         "auth": null,
-        "db": 0,
+        "db": 10,
         "cleanupInterval": 15
     },
 
@@ -228,6 +222,7 @@
 
     "telegram": {
         "enabled": false,
+        "botName": "",
         "token": "",
         "channel": "",
         "channelStats": {
@@ -236,11 +231,12 @@
         },
         "botCommands": {
             "stats": "/stats",
-            "enable": "/enable",
-            "disable": "/disable"
+            "report": "/report",
+            "notify": "/notify",
+            "blocks": "/blocks"
         }
     },
-    
+
     "monitoring": {
         "daemon": {
             "checkInterval": 60,
@@ -312,6 +308,10 @@
             "payments": {
                 "enabled": true
             }
+        },
+        "blocks": {
+            "enabled": true,
+            "days": 30
         }
     }
 }
