@@ -1,5 +1,5 @@
 {
-    "poolHost": "your.address.com",
+    "poolHost": "https://multi-miner.smartcoinpool.net",
 
     "coin": "Bytecoin",
     "symbol": "BCN",
@@ -9,6 +9,7 @@
     "blockchainExplorer": "https://explorer.bytecoin.org/block?hash={id}",
     "transactionExplorer": "https://explorer.bytecoin.org/tx?hash={id}",
     "daemonType": "bytecoin",
+    "previousOffset": null,
     "cnAlgorithm": "cryptonight",
     "isRandomX": false,
     "cnVariant": 0,
@@ -34,8 +35,8 @@
         "enabled": true,
         "mergedMining": false,
         "clusterForks": 2,
-        "poolAddress": "your pool wallet",
-        "intAddressPrefix": null,
+        "poolAddress": "bcnZHTr2CnWGqNqbjdS8s9Snn5H154wUmYoVQcit2Qb2SqSsCqPcvma5dvnkVXr9rWFdZ2GRddPFxQLdnvKFEY4F2zm8a3FaBM",
+        "intAddressPrefix": 572238,
         "blockRefreshInterval": 1000,
         "minerTimeout": 900,
         "sslCert": "/etc/letsencrypt/live/www.smartcoinpool.net/cert.pem",
@@ -67,7 +68,10 @@
             "maxJump": 50
         },
         "paymentId": {
-            "addressSeparator": "+"
+            "addressSeparator": "+",
+            "validation": true,
+            "validations": ["1,16", "64"],
+            "ban": true
         },
         "fixedDiff": {
             "enabled": true,
@@ -96,7 +100,7 @@
 
     "payments": {
         "enabled": true,
-        "interval": 300,
+        "interval": 60,
         "maxAddresses": 20,
         "mixin": 6,
         "priority": 0,
@@ -105,7 +109,7 @@
         "minerPayFee" : true,
         "minPayment": 1000000000,
         "maxPayment": null,
-        "maxTransactionAmount": 1000000000000,
+        "maxTransactionAmount": 10000000000000,
         "denomination": 100000000
     },
 
@@ -146,19 +150,19 @@
 
     "daemon": {
         "host": "127.0.0.1",
-        "port": 8081
+        "port": 9081
     },
 
     "wallet": {
         "host": "127.0.0.1",
-        "port": 8070
+        "port": 9070
     },
 
     "redis": {
         "host": "127.0.0.1",
         "port": 6379,
         "auth": null,
-        "db": 10,
+        "db": 9,
         "cleanupInterval": 15
     },
 
