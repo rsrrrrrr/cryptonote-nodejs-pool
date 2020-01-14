@@ -1899,7 +1899,7 @@ function initMonitoring () {
 	let settings = '';
 	for (let module in config.monitoring) {
 		settings = config.monitoring[module];
-		if (daemonType === "bytecoin" && module === "wallet" && settings.rpcMethod === "getbalance") {
+		if (daemonType.includes("bytecoin" && module === "wallet" && settings.rpcMethod === "getbalance") {
 			settings.rpcMethod = "getBalance";
 		}
 		if (settings.checkInterval) {
