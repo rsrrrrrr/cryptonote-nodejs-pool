@@ -14,35 +14,35 @@
 	"isRandomX": true,
 	"includeHeight": false,
 
-	"logging": {
-		"files": {
-			"level": "info",
-			"directory": "logs",
-			"flushInterval": 5
-		},
-		"console": {
-			"level": "info",
-			"colors": true
-		}
-	},
-	"childPools": null,
-	"poolServer": {
-		"enabled": true,
-		"mergedMining": false,
-		"clusterForks": "auto",
-		"poolAddress": "** Your pool wallet address **",
-		"intAddressPrefix": "0x116bc7",
-		"subAddressPrefix": "0x6847",
-		"blockRefreshInterval": 1000,
-		"minerTimeout": 900,
-		"sslCert": "./cert.pem",
-		"sslKey": "./privkey.pem",
-		"sslCA": "./chain.pem",
-		"ports": [
-			{
-				"port": 3333,
-				"difficulty": 5000,
-				"desc": "Low end hardware"
+    "logging": {
+        "files": {
+            "level": "info",
+            "directory": "logs",
+            "flushInterval": 5
+        },
+        "console": {
+            "level": "info",
+            "colors": true
+        }
+    },
+    "childPools": null,
+    "poolServer": {
+        "enabled": true,
+        "mergedMining": false,
+        "clusterForks": "auto",
+        "poolAddress": "** Your pool wallet address **",
+        "intAddressPrefix": "0x116bc7",
+        "subAddressPrefix": "0x6847",
+        "blockRefreshInterval": 1000,
+        "minerTimeout": 900,
+        "sslCert": "./cert.pem",
+        "sslKey": "./privkey.pem",
+        "sslCA": "./chain.pem",
+        "ports": [
+            {
+                "port": 3333,
+                "difficulty": 5000,
+                "desc": "Low end hardware"
             },
 			{
 				"port": 4444,
@@ -156,10 +156,10 @@
 		"port": 19994
 	},
 
-	"wallet": {
-		"host": "127.0.0.1",
-		"port": 19999
-	},
+    "wallet": {
+        "host": "127.0.0.1",
+        "port": 19999
+    },
 
 	"redis": {
 		"host": "127.0.0.1",

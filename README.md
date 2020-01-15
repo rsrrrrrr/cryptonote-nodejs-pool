@@ -215,6 +215,8 @@ Explanation for each field:
 "includeHeight":false, /*true to include block.height in job to miner*/
 "includeAlgo":"cn/wow", /*wownero specific change to include algo in job to miner*/	"includeAlgo":"cn/wow", /*wownero specific change to include algo in job to miner*/
 "isRandomX": true,
+"previousOffset": 7, // bytecoin derived coins try 3
+"offset": 2, // bytecoin derived coins try 3
 /* Logging */
 "logging": {
 
@@ -420,6 +422,14 @@ Explanation for each field:
     "sslCA": "./chain.pem", // The SSL certificate authority chain
     "trustProxyIP": false // Proxy X-Forwarded-For support
 },
+
+"rpcMethods": {
+    "getblocktemplate": "get_block_template",
+    "submitblock": {"key": "submit_block",
+                    "value": "{\"blocktemplate_blob\": \"{0}\"}"
+                   }
+},
+
 
 /* Coin daemon connection details (default port is 18981) */
 "daemon": {

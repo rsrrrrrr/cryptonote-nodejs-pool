@@ -1,164 +1,163 @@
 {
 	"poolHost": "your.pool.host",
 
-	"coin": "bytecoin",
-	"symbol": "BCN",
-	"coinUnits": 100000000,
-	"coinDecimalPlaces": 4,
-	"coinDifficultyTarget": 120,
-	"blockchainExplorer": "http://blockexplorer.arqma.com/block/{id}",
-	"transactionExplorer": "http://blockexplorer.arqma.com/tx/{id}",
-	"daemonType": "bytecoin",
-	"cnAlgorithm": "cryptonight",
-	"cnVariant": 0,
-	"cnBlobType": 2,
+    "coin": "Bytecoin",
+    "symbol": "BCN",
+    "coinUnits": 100000000,
+    "coinDecimalPlaces": 4,
+    "coinDifficultyTarget": 120,
+    "blockchainExplorer": "https://explorer.bytecoin.org/block?hash={id}",
+    "transactionExplorer": "https://explorer.bytecoin.org/tx?hash={id}",
+    "daemonType": "bytecoin",
+    "previousOffset": null,
+    "cnAlgorithm": "cryptonight",
+    "isRandomX": false,
+    "cnVariant": 0,
+    "cnBlobType": 2,
+    "includeHeight": false,
+    "includeAlgo": false,
 
-	"logging": {
-		"files": {
-			"level": "info",
-			"directory": "logs",
-			"flushInterval": 5
-		},
-		"console": {
-			"level": "info",
-			"colors": true
-		}
-	},
-	"childPools": null,
-	"poolServer": {
-		"enabled": true,
-		"mergedMining": false,
-		"clusterForks": "auto",
-		"poolAddress": "** Your pool wallet address **",
-		"intAddressPrefix": 6,
-		"blockRefreshInterval": 1000,
-		"minerTimeout": 900,
-		"sslCert": "./cert.pem",
-		"sslKey": "./privkey.pem",
-		"sslCA": "./chain.pem",
-		"ports": [
-			{
-				"port": 3333,
-				"difficulty": 5000,
-				"desc": "Low end hardware"
+    "logging": {
+        "files": {
+            "level": "info",
+            "directory": "logs",
+            "flushInterval": 5
+        },
+        "console": {
+            "level": "info",
+            "colors": true
+        }
+    },
+
+    "childPools": [],
+
+    "poolServer": {
+        "enabled": true,
+        "mergedMining": false,
+        "clusterForks": 2,
+        "poolAddress": "bcnZHTr2CnWGqNqbjdS8s9Snn5H154wUmYoVQcit2Qb2SqSsCqPcvma5dvnkVXr9rWFdZ2GRddPFxQLdnvKFEY4F2zm8a3FaBM",
+        "intAddressPrefix": 572238,
+        "blockRefreshInterval": 1000,
+        "minerTimeout": 900,
+        "sslCert": "/etc/letsencrypt/live/www.smartcoinpool.net/cert.pem",
+        "sslKey": "/etc/letsencrypt/live/www.smartcoinpool.net/privkey.pem",
+        "sslCA": "/etc/letsencrypt/live/www.smartcoinpool.net/chain.pem",
+        "ports": [
+            {
+                "port": 1444,
+                "difficulty": 2000,
+                "desc": "Low end hardware"
             },
-			{
-				"port": 4444,
-				"difficulty": 15000,
-				"desc": "Mid range hardware"
+            {
+                "port": 2444,
+                "difficulty": 20000,
+                "desc": "Mid range hardware"
             },
-			{
-				"port": 5555,
-				"difficulty": 25000,
-				"desc": "High end hardware"
-            },
-			{
-				"port": 7777,
-				"difficulty": 500000,
-				"desc": "Cloud-mining / NiceHash"
-            },
-			{
-				"port": 8888,
-				"difficulty": 25000,
-				"desc": "Hidden port",
-				"hidden": true
-            },
-			{
-				"port": 9999,
-				"difficulty": 20000,
-				"desc": "SSL connection",
-				"ssl": true
+            {
+                "port": 3444,
+                "difficulty": 200000,
+                "desc": "High end hardware"
             }
         ],
-		"varDiff": {
-			"minDiff": 100,
-			"maxDiff": 100000000,
-			"targetTime": 60,
-			"retargetTime": 30,
-			"variancePercent": 30,
-			"maxJump": 100
-		},
-		"paymentId": {
-			"addressSeparator": ".",
-			"validation": false,
-			"validations": ["1,16", "64"],
-			"ban": true
-		},
-		"fixedDiff": {
-			"enabled": true,
-			"addressSeparator": "."
-		},
-		"shareTrust": {
-			"enabled": true,
-			"min": 10,
-			"stepDown": 3,
-			"threshold": 10,
-			"penalty": 30
-		},
-		"banning": {
-			"enabled": true,
-			"time": 600,
-			"invalidPercent": 25,
-			"checkThreshold": 30
-		},
-		"slushMining": {
-			"enabled": false,
-			"weight": 300,
-			"blockTime": 60,
-			"lastBlockCheckRate": 1
-		}
-	},
+        "varDiff": {
+            "minDiff": 100,
+            "maxDiff": 100000000,
+            "targetTime": 30,
+            "retargetTime": 30,
+            "variancePercent": 30,
+            "maxJump": 50
+        },
+        "paymentId": {
+            "addressSeparator": "+",
+            "validation": true,
+            "validations": ["1,16", "64"],
+            "ban": true
+        },
+        "fixedDiff": {
+            "enabled": true,
+            "addressSeparator": "."
+        },
+        "shareTrust": {
+            "enabled": true,
+            "min": 10,
+            "stepDown": 3,
+            "threshold": 10,
+            "penalty": 30
+        },
+        "banning": {
+            "enabled": true,
+            "time": 600,
+            "invalidPercent": 25,
+            "checkThreshold": 30
+        },
+        "slushMining": {
+            "enabled": false,
+            "weight": 300,
+            "blockTime": 60,
+            "lastBlockCheckRate": 1
+         }
+    },
 
-	"payments": {
-		"enabled": true,
-		"interval": 1800,
-		"maxAddresses": 50,
-		"mixin": 1,
-		"priority": 0,
-		"transferFee": 50000000,
-		"dynamicTransferFee": true,
-		"minerPayFee": true,
-		"minPayment": 1000000000,
-		"maxTransactionAmount": 50000000000000,
-		"denomination": 1000000000
-	},
+    "payments": {
+        "enabled": true,
+        "interval": 60,
+        "maxAddresses": 20,
+        "mixin": 6,
+        "priority": 0,
+        "transferFee": 5000000,
+        "dynamicTransferFee": true,
+        "minerPayFee" : true,
+        "minPayment": 1000000000,
+        "maxPayment": null,
+        "maxTransactionAmount": 10000000000000,
+        "denomination": 100000000
+    },
 
-	"blockUnlocker": {
-		"enabled": true,
-		"interval": 30,
-		"depth": 60,
-		"poolFee": 0.8,
-		"devDonation": 0.2,
-		"networkFee": 0.0,
-		"fixBlockHeightRPC": false
-	},
+    "blockUnlocker": {
+        "enabled": true,
+        "interval": 30,
+        "depth": 10,
+        "poolFee": 0.0,
+        "devDonation": 0.0,
+        "networkFee": 0.0,
+        "fixBlockHeightRPC": true,
+        "useFirstVout": false
+    },
 
-	"api": {
-		"enabled": true,
-		"hashrateWindow": 600,
-		"updateInterval": 5,
-		"bindIp": "0.0.0.0",
-		"port": 8117,
-		"blocks": 30,
-		"payments": 30,
-		"password": "your_password",
-		"ssl": false,
-		"sslPort": 8119,
-		"sslCert": "./cert.pem",
-		"sslKey": "./privkey.pem",
-		"sslCA": "./chain.pem",
-		"trustProxyIP": true
-	},
+    "api": {
+        "enabled": true,
+        "hashrateWindow": 600,
+        "updateInterval": 20,
+        "bindIp": "0.0.0.0",
+        "port": 8217,
+        "blocks": 30,
+        "payments": 30,
+        "password": "password",
+        "ssl": true,
+        "sslPort": 8219,
+        "sslCert": "/etc/letsencrypt/live/www.smartcoinpool.net/cert.pem",
+        "sslKey": "/etc/letsencrypt/live/www.smartcoinpool.net/privkey.pem",
+        "sslCA": "/etc/letsencrypt/live/www.smartcoinpool.net/chain.pem",
+        "trustProxyIP": true
+    },
 
-	"daemon": {
-		"host": "127.0.0.1",
-		"port": 8070
-	},
 
-	"wallet": {
-		"host": "127.0.0.1",
-		"port": 8071
-	},
+    "rpcMethods": {
+	"getblocktemplate": "get_block_template",
+	"submitblock": {"key": "submit_block",
+			"value": "{\"blocktemplate_blob\": \"{0}\"}"
+		       }
+    },
+
+    "daemon": {
+        "host": "127.0.0.1",
+        "port": 9081
+    },
+
+    "wallet": {
+        "host": "127.0.0.1",
+        "port": 9070
+    },
 
 	"redis": {
 		"host": "127.0.0.1",
@@ -226,20 +225,6 @@
 		}
 	},
 
-	"telegram": {
-		"enabled": false,
-		"token": "",
-		"channel": "",
-		"channelStats": {
-			"enabled": false,
-			"interval": 30
-		},
-		"botCommands": {
-			"stats": "/stats",
-			"enable": "/enable",
-			"disable": "/disable"
-		}
-	},
 
 	"monitoring": {
 		"daemon": {
@@ -251,67 +236,70 @@
 			"rpcMethod": "get_balance"
 		}
 	},
+    "prices": {
+        "source": "tradeogre",
+        "currency": "USD"
+    },
 
-	"prices": {
-		"source": "tradeogre",
-		"currency": "USD"
-	},
-
-	"charts": {
-		"pool": {
-			"hashrate": {
-				"enabled": true,
-				"updateInterval": 60,
-				"stepInterval": 1800,
-				"maximumPeriod": 86400
-			},
-			"miners": {
-				"enabled": true,
-				"updateInterval": 60,
-				"stepInterval": 1800,
-				"maximumPeriod": 86400
-			},
-			"workers": {
-				"enabled": true,
-				"updateInterval": 60,
-				"stepInterval": 1800,
-				"maximumPeriod": 86400
-			},
-			"difficulty": {
-				"enabled": true,
-				"updateInterval": 1800,
-				"stepInterval": 10800,
-				"maximumPeriod": 604800
-			},
-			"price": {
-				"enabled": true,
-				"updateInterval": 1800,
-				"stepInterval": 10800,
-				"maximumPeriod": 604800
-			},
-			"profit": {
-				"enabled": true,
-				"updateInterval": 1800,
-				"stepInterval": 10800,
-				"maximumPeriod": 604800
-			}
-		},
-		"user": {
-			"hashrate": {
-				"enabled": true,
-				"updateInterval": 180,
-				"stepInterval": 1800,
-				"maximumPeriod": 86400
-			},
-			"worker_hashrate": {
-				"enabled": true,
-				"updateInterval": 60,
-				"stepInterval": 60,
-				"maximumPeriod": 86400
-			},
-			"payments": {
-				"enabled": true
-			}
-		}
-	}
+    "charts": {
+        "pool": {
+            "hashrate": {
+                "enabled": true,
+                "updateInterval": 60,
+                "stepInterval": 1800,
+                "maximumPeriod": 86400
+            },
+            "miners": {
+                "enabled": true,
+                "updateInterval": 60,
+                "stepInterval": 1800,
+                "maximumPeriod": 86400
+            },
+            "workers": {
+                "enabled": true,
+                "updateInterval": 60,
+                "stepInterval": 1800,
+                "maximumPeriod": 86400
+            },
+            "difficulty": {
+                "enabled": true,
+                "updateInterval": 1800,
+                "stepInterval": 10800,
+                "maximumPeriod": 604800
+            },
+            "price": {
+                "enabled": true,
+                "updateInterval": 1800,
+                "stepInterval": 10800,
+                "maximumPeriod": 604800
+            },
+            "profit": {
+                "enabled": true,
+                "updateInterval": 1800,
+                "stepInterval": 10800,
+                "maximumPeriod": 604800
+            }
+        },
+        "user": {
+            "hashrate": {
+                "enabled": true,
+                "updateInterval": 180,
+                "stepInterval": 1800,
+                "maximumPeriod": 86400
+            },
+            "worker_hashrate": {
+                "enabled": true,
+                "updateInterval": 60,
+                "stepInterval": 60,
+                "maximumPeriod": 86400
+            },
+            "payments": {
+                "enabled": true
+            }
+        },
+        "blocks": {
+            "enabled": true,
+            "days": 30
+        }
+    }
 }
