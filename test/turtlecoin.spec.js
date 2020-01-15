@@ -1,14 +1,15 @@
 var chai = require('chai');
 var sinonChai = require("sinon-chai");
 chai.use(sinonChai);
+var sinon = require('sinon')
 var expect = chai.expect;
 let assert = require('assert');
 let async = require('async');
 global.config = require('./turtle.json')
 
 
-global.log = function (severity, system, text, data) {
-    let formattedMessage = text;
+global.log = function (severity, system, text, data) {}
+/*    let formattedMessage = text;
 
     if (data) {
 	data.unshift(text);
@@ -16,12 +17,16 @@ global.log = function (severity, system, text, data) {
     }
     console.log(`\t${formattedMessage}`)
 }
+*/
+
+//let utils = require('../lib/utils.js');
 
 let bytecoin = require('../lib/paymentprocessors/turtlecoin')
+let apiInterfaces = require('../lib/apiInterfaces.js')(config.daemon, config.wallet, config.api);
 
 let paymentProcessors = {};
 
-let callback = () => {}
+let callback = (result) => {return result}
 
 describe('Turtlecoin Payment Processor', () => {
 
@@ -36,14 +41,26 @@ describe('Turtlecoin Payment Processor', () => {
 	})
     })
 
-    describe('Handle processPayments', () =>{
-	it("Should display 'No workers\' balances reached the minium payment threshold", () => {
-	    let payments = {}
+    describe('No Payments', () =>{
+	it("Should display log message 'No workers\' balances reached the minimum payment threshold", () => {
+	    let balances = {}
 	    let minPayoutLevel = {}
-	    // spy on global.log
-	    paymentProcessors['turtlecoin'](payments, minPayoutLevel, callback)
-	    // expect global.log to havebeeencalledwith("Should display 'No workers\' balances reached the minium payment threshold")
-	    expect(1).to.equal(1)
+	    let stub = sinon.stub(global, 'log')
+	    paymentProcessors['turtlecoin'](balances, minPayoutLevel, callback)
+	    expect(global.log).to.have.been.calledWith("info", "payments - turtlecoin", "No workers\' balances reached the minimum payment threshold")
 	})
+    })
+
+    describe('Payments', () =>{
+        it("Should send correct parameters to 'apiInterfaces.jsonHttpRequest'", () => {
+	    let balances = {  "aRi1cDd6LkAcc1p6W58dkPi8xSfbZ5EuYFrHxwH3py1MQ9rFrzmSaghguD4GGpCfHSMmKXWJrd4e5CkabC3viWJKfHuDLYqHNGs9D83sj6BPX": 234895806015}
+            let minPayoutLevel = {  "aRi1cDd6LkAcc1p6W58dkPi8xSfbZ5EuYFrHxwH3py1MQ9rFrzmSaghguD4GGpCfHSMmKXWJrd4e5CkabC3viWJKfHuDLYqHNGs9D83sj6BPX":1000000000}
+	    let data = ''
+	    let endpoint = '/transactions/send/prepared'
+            let apiInterfacesStub = sinon.stub(apiInterfaces, 'jsonHttpRequest')
+//            let utilsStub = sinon.stub(utils, 'isIntegratedAddress')
+            paymentProcessors['turtlecoin'](balances, minPayoutLevel, callback)
+            expect(apiInterfaces.jsonHttpRequest).to.have.been.calledWith(config.wallet.host, config.wallet.port, data, null, endpoint)
+        })
     })
 })
