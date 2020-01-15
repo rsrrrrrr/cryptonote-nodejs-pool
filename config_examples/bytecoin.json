@@ -143,8 +143,9 @@
 
 
     "rpcMethods": {
-	"getblocktemplate": "get_block_template",
-	"submitblock": {"key": "submit_block",
+        "getinfo": "getinfo",
+    	"getblocktemplate": "get_block_template",
+    	"submitblock": {"key": "submit_block",
 			"value": "{\"blocktemplate_blob\": \"{0}\"}"
 		       }
     },

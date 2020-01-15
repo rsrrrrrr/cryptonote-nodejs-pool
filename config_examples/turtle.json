@@ -29,7 +29,7 @@
     "childPools": null,
     "poolServer": {
         "enabled": true,
-	"mergedMining": false,
+	    "mergedMining": false,
         "clusterForks": "auto",
         "poolAddress": "** Your pool wallet address **",
         "intAddressPrefix": null,
@@ -148,6 +148,14 @@
         "sslKey": "./privkey.pem",
         "sslCA": "./chain.pem",
         "trustProxyIP": true
+    },
+
+    "rpcMethods": {
+        "getinfo": "info",
+        "getblocktemplate": "getblocktemplate",
+        "submitblock": {"key": "submitblock",
+            "value": "[{0}]"
+               }
     },
 
     "daemon": {
