@@ -13,10 +13,11 @@ global.log = function (severity, system, text, data) {}
 
 let bytecoin = require('../lib/paymentprocessors/turtlecoin')
 let apiInterfaces = require('../lib/apiInterfaces.js')
-/*
+
 let redis = require('redis'); 
-let redisDB = (config.redis.db && config.redis.db > 0) ? config.redis.db : 0;
-global.redisClient = redis.createClient(config.redis.port, config.redis.host, {
+let fakeredis = require('fakeredis')
+//let redisDB = (config.redis.db && config.redis.db > 0) ? config.redis.db : 0;
+/*global.redisClient = redis.createClient(config.redis.port, config.redis.host, {
     db: redisDB,
     auth_pass: config.redis.auth
 });
@@ -97,23 +98,65 @@ describe('Turtlecoin Payment Processor', () => {
             expect(apiInterfaces.jsonHttpRequest).to.have.been.calledWith(config.wallet.host, config.wallet.port, data, sinon.match.any, endpoint)
 	    expect(global.log).to.have.been.calledWith("error", "payments - turtlecoin", "Error with /transactions/prepare/advanced request to WalletApi, The password given for this wallet is incorrect.")
         })
-/*
+    })
+    describe('doit', () =>{
+	before(() => {
+	    sinon.stub(redis, 'createClient').callsFake( fakeredis.createClient);
+	    global.redisClient = redis.createClient()
+	})
+	after(() => {
+	    redis.createClient.restore();
+ 	 });
+
+  	afterEach((done) => {
+	    global.redisClient.flushdb(function(err){
+    	    	done();
+   	    });
+	})
+
         it("Should create hincrby for `TurtleCoin:workers:TRTLv2Fyavy8CXG8BPEbNeCHFZ1fuDCYCZ3vW5H5LXN4K2M2MHUpTENip9bbavpHvvPwb4NDkBWrNgURAd5DB38FHXWZyoBh4w` balance from 'apiInterfaces.jsonHttpRequest'", () => {
             //ARRANGE
             let error = null
+            let endpoint = '/transactions/prepare/advanced'
+
+            let balances = {"TRTLv2Fyavy8CXG8BPEbNeCHFZ1fuDCYCZ3vW5H5LXN4K2M2MHUpTENip9bbavpHvvPwb4NDkBWrNgURAd5DB38FHXWZyoBh4w": 1234}
+            let minPayoutLevel = {"TRTLv2Fyavy8CXG8BPEbNeCHFZ1fuDCYCZ3vW5H5LXN4K2M2MHUpTENip9bbavpHvvPwb4NDkBWrNgURAd5DB38FHXWZyoBh4w":1000}
             let result = {"transactionHash": "396e2a782c9ce9993982c6f93e305b05306d0e5794f57157fbac78581443c55f","fee": 1000,"relayedToNetwork": false}
 
-            //sinon.stub(apiInterfaces, 'jsonHttpRequest').callsFake(function(host, port, data, callback, path) {return callback(null, null)})
-	    stub.callsFake(function(host, port, data, callback, path) {return callback(null, result)})
-	    sinon.stub(redisClient, 'multi')
+	    let blah = [ [ 'hincrby',
+    'TurtleCoin:workers:TRTLv2Fyavy8CXG8BPEbNeCHFZ1fuDCYCZ3vW5H5LXN4K2M2MHUpTENip9bbavpHvvPwb4NDkBWrNgURAd5DB38FHXWZyoBh4w',
+    'balance',
+    -1198 ],
+  [ 'hincrby',
+    'TurtleCoin:workers:TRTLv2Fyavy8CXG8BPEbNeCHFZ1fuDCYCZ3vW5H5LXN4K2M2MHUpTENip9bbavpHvvPwb4NDkBWrNgURAd5DB38FHXWZyoBh4w',
+    'balance',
+    -1000 ],
+  [ 'hincrby',
+    'TurtleCoin:workers:TRTLv2Fyavy8CXG8BPEbNeCHFZ1fuDCYCZ3vW5H5LXN4K2M2MHUpTENip9bbavpHvvPwb4NDkBWrNgURAd5DB38FHXWZyoBh4w',
+    'paid',
+    NaN ],
+  [ 'zadd',
+    'TurtleCoin:payments:all',
+    1579233769,
+    '396e2a782c9ce9993982c6f93e305b05306d0e5794f57157fbac78581443c55f:0:1000:0:1' ],
+  [ 'zadd',
+    'TurtleCoin:payments:TRTLv2Fyavy8CXG8BPEbNeCHFZ1fuDCYCZ3vW5H5LXN4K2M2MHUpTENip9bbavpHvvPwb4NDkBWrNgURAd5DB38FHXWZyoBh4w',
+    1579233769,
+    '396e2a782c9ce9993982c6f93e305b05306d0e5794f57157fbac78581443c55f:1198:1000:0' ] ]
+
+	    
+	    sinon.spy(global.redisClient, 'multi')
+	    sinon.stub(apiInterfaces, 'jsonHttpRequest').callsFake(function(host, port, data, callback, path) {return callback(null, result)})
 
             //ACT
             paymentProcessors['turtlecoin'](balances, minPayoutLevel, callback)
 
             //ASSERT
             expect(apiInterfaces.jsonHttpRequest).to.have.been.calledWith(config.wallet.host, config.wallet.port, data, sinon.match.any, endpoint)
+	
+	    expect(global.redisClient.multi.called).to.equal(true)
         })
-
+/*
         it("Should create hincrby for `TurtleCoin:workers:TRTLv2Fyavy8CXG8BPEbNeCHFZ1fuDCYCZ3vW5H5LXN4K2M2MHUpTENip9bbavpHvvPwb4NDkBWrNgURAd5DB38FHXWZyoBh4w` paid from 'apiInterfaces.jsonHttpRequest'", () => {
             //ARRANGE
             let error = null
